@@ -1,80 +1,232 @@
-h1 {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* body {
+  margin: 0;
+  background-image: url("bg.png");
+  background-size: cover;
+  background-position: bottom;
+  background-attachment: fixed;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
+}
+
+.content {
+  background-image: url("bg.png");
+  background-size: cover;
+  background-position: bottom;
+  background-attachment: fixed;
+}
+
+header {
+  background: white;
   text-align: center;
-  color: lightsalmon;
-  font-family: Garamond;
-}
-
-.header {
-  color: #876d5d;
-  font-family: Georgia;
-  font-style: italic;
-  text-align: center;
-  text-shadow: 2px 2px 5px #555;
-  text-decoration: underline;
-  text-decoration-color: #876d5d;
-}
-
-.skill-header {
-  text-align: left;
-  color: #b19a93;
-}
-
-.skill-container {
-  border: solid #876d5d;
-  width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-bottom: 8px;
-}
-
-.navbar {
+  position: fixed;
+  z-index: 999;
   width: 100%;
-  background-color: #252324;
-  overflow: auto;
-  margin-bottom: 12px;
 }
 
-.navbar a {
-  float: left;
-  text-align: center;
-  padding: 12px;
-  color: #f4f3fb;
+.nav-toggle {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+.nav-toggle:focus ~ .nav-toggle-label {
+  outline: 3px solid rgba(lightblue, 0.75);
+}
+
+.nav-toggle-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 1em;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-toggle-label span,
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+  display: block;
+  background: rgb(166, 209, 166);
+  height: 2.5px;
+  width: 2em;
+  border-radius: 2px;
+  position: relative;
+}
+
+.nav-toggle-label span::before,
+.nav-toggle-label span::after {
+  content: "";
+  position: absolute;
+}
+
+.nav-toggle-label span::before {
+  bottom: 7px;
+}
+
+.nav-toggle-label span::after {
+  top: 7px;
+}
+
+nav {
+  position: absolute;
+  text-align: left;
+  top: 2.7em;
+  left: 0;
+  background: rgb(203, 228, 207);
+  width: 100%;
+  transform: scale(1, 0);
+  transform-origin: top;
+  transition: transform 400ms ease-in-out;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  margin-bottom: 1em;
+  margin-left: 1em;
+}
+
+nav a {
+  color: #3f523e;
   text-decoration: none;
-  font-size: 17px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
 }
 
-.navbar a:hover {
-  background-color: #555;
+nav a:hover {
+  color: #3f523e;
 }
 
-.active {
-  background-color: #b19a93;
+.nav-toggle:checked ~ nav {
+  transform: scale(1, 1);
 }
 
-@media screen and (max-width: 500px) {
-  .navbar a {
-    float: none;
+.nav-toggle:checked ~ nav a {
+  opacity: 1;
+  transition: opacity 250ms ease-in-out 250ms;
+}
+
+@media screen and (min-width: 800px) {
+  .nav-toggle-label {
+    display: none;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+  }
+
+  .logo {
+    grid-column: 2 / 3;
+  }
+
+  nav {
+    all: unset; /* this causes issues with Edge, since it's unsupported */
+
+    /* the following lines are not from my video, but add Edge support */
+    position: relative;
+    text-align: left;
+    transition: none;
+    transform: scale(1, 1);
+    background: none;
+    top: initial;
+    left: initial;
+    /* end Edge support stuff */
+
+    grid-column: 3 / 4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  nav ul {
+    display: flex;
+  }
+
+  nav li {
+    margin-left: 3em;
+    margin-bottom: 0;
+  }
+
+  nav a {
+    opacity: 1;
+    position: relative;
+  }
+
+  nav a::before {
+    content: "";
     display: block;
+    height: 5px;
+    background: #3f523e;
+    position: absolute;
+    top: -0.75rem;
+    left: 0;
+    right: 0;
+    transform: scale(0, 1);
+    transition: transform ease-in-out 250ms;
+  }
+
+  nav a:hover::before {
+    transform: scale(1, 1);
   }
 }
 
-.image-box {
-  width: 288px;
-  height: 330px;
-  background-image: url("img.JPG");
-  background-size: 100% 100%;
-  border: 6px solid #876d5d;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 10px 10px 5px #555;
-}
+/*<div class="container" style="padding-top: 10rem">
+      <div class="row justify-content-center g-3">
+        <div class="col-6 col-md-4">
+          <div class="card shadow-lg">
+            <img src="img.JPG" class="card-img-top img-fit" />
+            <div class="card-body">
+              <h5 class="card-title">Drip Coffee</h5>
+              <p class="card-text">Brbrbrbrbr</p>
+              <div class="text-end"></div>
+            </div>
+          </div>
+        </div>
 
-body {
-  background-image: url("bg.png");
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: contain;
-  background-attachment: fixed;
-}
+        <div class="col-6 col-md-4">
+          <div class="card shadow-lg">
+            <img src="img.JPG" class="card-img-top img-fit" />
+            <div class="card-body">
+              <h5 class="card-title">Drip Coffee</h5>
+              <p class="card-text">Brbrbrbrbr</p>
+              <div class="text-end"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+          <div class="card shadow-lg">
+            <img src="img.JPG" class="card-img-top img-fit" />
+            <div class="card-body">
+              <h5 class="card-title">Drip Coffee</h5>
+              <p class="card-text">Brbrbrbrbr</p>
+              <div class="text-end"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+          <div class="card shadow-lg">
+            <img src="img.JPG" class="card-img-top img-fit" />
+            <div class="card-body">
+              <h5 class="card-title">Drip Coffee</h5>
+              <p class="card-text">Brbrbrbrbr</p>
+              <div class="text-end"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>*/
